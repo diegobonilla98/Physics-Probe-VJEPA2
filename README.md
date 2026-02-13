@@ -57,7 +57,7 @@ Predict `alpha` from frozen embeddings with ridge regression.
 
 Fit results:
 
-![Phase 1 fit results](heat\results\fit_results.png)
+![Phase 1 fit results](heat/results/fit_results.png)
 
 From `heat/results/fit_summary.txt` and `heat/results/fit_metrics.json`:
 
