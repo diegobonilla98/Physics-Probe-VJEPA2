@@ -124,30 +124,35 @@ If that were true, simple pixel features should perform similarly to embeddings.
 
 Script: `heat/pixel_vs_embed_falsification.py`
 
-Compared on the same split:
+Compared across multi-seed stratified splits (`seeds=[42,43,44,45,46]`, 40 train / 10 test per seed):
 
 1. Embedding features (`per_frame.npy`)
-2. Pixel features (RGB frames downsampled to `16 x 16`, flattened)
+2. Pixel baselines (`rgb16`, `gray16`, `rgb32`, `crop_patch16`)
 
 Matched evaluations:
 
-- `alpha` probes (simulation-mean and frame-level)
-- Koopman rollouts (same latent dimension/protocol)
+- `alpha` probes (simulation-mean and frame-level), with CV-tuned ridge per modality
+- Koopman rollouts (same latent dimension/protocol), plus time-shuffled control
 - Cross-modal linear predictability (`pixel -> embedding`, `embedding -> pixel`)
+- Aggregate reporting with mean/std and 95% CI across seeds
 
 Outputs:
 
 - `heat/results/pixel_falsification_summary.txt`
 - `heat/results/pixel_falsification_metrics.json`
 
-### Falsification results (current run, 50 sims)
+### Falsification results (current multi-seed run, 50 sims)
 
-- Alpha probe (simulation-mean, test R2): embedding `0.8515` vs pixel `0.5836`
-- Alpha probe (frame-level, test R2): embedding `0.8107` vs pixel `-5132.1204`
-- Koopman rollout (test cosine mean): embedding `0.9057 +/- 0.0144` vs pixel `0.2988 +/- 0.2724`
-- Linear `pixel -> embedding` (test total R2): `-8461.9281`
+- Embedding Koopman rollout cosine (test): `0.9109 +/- 0.0041`, 95% CI `[0.9073, 0.9144]`
+- Best pixel Koopman rollout cosine (test): `0.3692 +/- 0.1343`, 95% CI `[0.2515, 0.4868]`
+- Koopman gap (embedding - best pixel): `+0.5417 +/- 0.1321`, 95% CI `[0.4259, 0.6575]`
+- Best `pixel -> embedding` linear total R2: `-0.0241 +/- 0.0662`, 95% CI `[-0.0822, 0.0339]`
+- Alpha probe (simulation-mean) is unstable across seeds:
+  - Embedding: `0.1664 +/- 1.6337`, 95% CI `[-1.2656, 1.5984]`
+  - Best pixel: `0.6787 +/- 0.1102`, 95% CI `[0.5821, 0.7753]`
+  - Outlier behavior appears in one seed due hyperparameter sensitivity (sim-level probe), while frame-level embedding alpha probe remains high in all seeds (`~0.83` to `~0.94` test R2).
 
-Interpretation: in this dataset, embeddings are not behaving like a simple linearized/downsampled pixel representation.
+Interpretation: the strong anti-pixel signal is robust for dynamics and weak for direct pixel->embedding reconstruction. Alpha-sim decoding is currently sensitive and not stable enough for strong claims.
 
 ## Conservative Conclusion
 
@@ -168,7 +173,7 @@ What this does not prove:
 - Small sample size (50 simulations).
 - Single PDE family (diffusion only).
 - Single model backbone.
-- Single seed in reported primary run.
+- Only 5 seeds so far; one seed shows unstable sim-level alpha behavior.
 - Synthetic rendering pipeline can introduce shortcuts.
 
 ## Next Research Steps
