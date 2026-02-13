@@ -1,0 +1,30 @@
+heat physics extraction summary
+================================================================
+sims: total=50 train=40 test=10
+embedding_dim=1024 koopman_latent_dim=32 spatial_channels=64
+
+alpha linear probe (sim mean embeddings)
+----------------------------------------------------------------
+train_r2=1.0000 test_r2=0.8515
+train_mae=0.000071 test_mae=0.287512
+
+alpha linear probe (frame embeddings)
+----------------------------------------------------------------
+train_r2=0.9996 test_r2=0.8107
+train_mae=0.018798 test_mae=0.338030
+
+koopman in pca latent
+----------------------------------------------------------------
+spectral_radius=0.991239
+one_step_mse_train=3.458938e-01 one_step_mse_test=4.928611e-01
+one_step_cos_train=0.9649 one_step_cos_test=0.9535
+rollout_cos_train=0.9189 +/- 0.0087
+rollout_cos_test=0.9057 +/- 0.0144
+
+spatial token diffusion head (real alpha / shuffled alpha / no alpha)
+----------------------------------------------------------------
+final_train_loss_real=6.431118e+00 final_test_loss_real=6.292509e+00
+final_train_loss_shuf=6.267228e+00 final_test_loss_shuf=6.279049e+00
+final_train_loss_none=5.793063e+00 final_test_loss_none=5.729559e+00
+rollout_cos_train=0.5964 +/- 0.1283
+rollout_cos_test=0.6298 +/- 0.1181

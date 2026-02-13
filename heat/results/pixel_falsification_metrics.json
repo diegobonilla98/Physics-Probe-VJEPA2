@@ -1,0 +1,64 @@
+{
+  "setup": {
+    "n_total": 50,
+    "n_train": 40,
+    "n_test": 10,
+    "seed": 42,
+    "test_ratio": 0.2,
+    "ridge_lambda": 0.01,
+    "latent_dim": 32,
+    "pixel_grid": 16,
+    "pixel_dim": 768,
+    "embed_dim": 1024
+  },
+  "alpha_probe_sim": {
+    "embed_train_r2": 0.9999999917085411,
+    "embed_test_r2": 0.8515279637945836,
+    "embed_test_mae": 0.28751200437545776,
+    "pixel_train_r2": 0.9999979924907322,
+    "pixel_test_r2": 0.5835695277612537,
+    "pixel_test_mae": 0.4780427813529968
+  },
+  "alpha_probe_frame": {
+    "embed_train_r2": 0.9995737871472095,
+    "embed_test_r2": 0.8107153918404193,
+    "embed_test_mae": 0.3380304276943207,
+    "pixel_train_r2": 0.2727935740121774,
+    "pixel_test_r2": -5132.120364521988,
+    "pixel_test_mae": 43.867645263671875
+  },
+  "cross_modal_linear_predictability": {
+    "pixel_to_embed_test_r2_total": -8461.928141854285,
+    "pixel_to_embed_test_cos": 0.1620708405971527,
+    "embed_to_pixel_test_r2_total": -0.7100475576953349,
+    "embed_to_pixel_test_cos": 0.2990783751010895
+  },
+  "koopman_rollout": {
+    "embed": {
+      "latent_dim": 32,
+      "spectral_radius": 0.9912386536598206,
+      "rollout_cos_train_mean": 0.9188895270228385,
+      "rollout_cos_train_std": 0.008717538075801159,
+      "rollout_cos_test_mean": 0.9057166934013366,
+      "rollout_cos_test_std": 0.014444348605069773,
+      "rollout_mse_train_mean": 0.7774020068347454,
+      "rollout_mse_test_mean": 0.9696995437145233
+    },
+    "pixel": {
+      "latent_dim": 32,
+      "spectral_radius": 0.9932593703269958,
+      "rollout_cos_train_mean": 0.5664949992671608,
+      "rollout_cos_train_std": 0.32254233237193003,
+      "rollout_cos_test_mean": 0.29883400090038775,
+      "rollout_cos_test_std": 0.2723684690462698,
+      "rollout_mse_train_mean": 0.04310603262565564,
+      "rollout_mse_test_mean": 0.030228976695798337
+    }
+  },
+  "verdict": {
+    "embedding_alpha_advantage_r2": 0.2679584360333299,
+    "embedding_dynamics_advantage_cos": 0.606882692500949,
+    "pixel_to_embedding_linear_r2": -8461.928141854285,
+    "text": "Evidence against catastrophic pixel-only explanation."
+  }
+}

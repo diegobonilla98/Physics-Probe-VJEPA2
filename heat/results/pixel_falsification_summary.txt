@@ -1,0 +1,31 @@
+pixel-vs-embedding falsification report
+====================================================================
+sims: total=50 train=40 test=10
+pixel_features=16x16x3 (768 dims)
+embedding_dim=1024 latent_dim=32
+
+alpha probe (simulation-mean)
+--------------------------------------------------------------------
+embed: test_r2=0.8515 test_mae=0.2875
+pixel: test_r2=0.5836 test_mae=0.4780
+embed_minus_pixel_r2=0.2680
+
+alpha probe (frame-level)
+--------------------------------------------------------------------
+embed: test_r2=0.8107 test_mae=0.3380
+pixel: test_r2=-5132.1204 test_mae=43.8676
+
+cross-modal linear predictability
+--------------------------------------------------------------------
+pixel->embed: test_r2_total=-8461.9281 cos=0.1621
+embed->pixel: test_r2_total=-0.7100 cos=0.2991
+
+koopman rollout (same latent dim)
+--------------------------------------------------------------------
+embed: test_cos=0.9057 +/- 0.0144
+pixel: test_cos=0.2988 +/- 0.2724
+embed_minus_pixel_cos=0.6069
+
+verdict
+--------------------------------------------------------------------
+Evidence against catastrophic pixel-only explanation.
