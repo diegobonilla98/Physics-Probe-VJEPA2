@@ -2,7 +2,7 @@
 
 ## Abstract
 
-This repository is an exploratory, fast-turnaround study on whether a frozen video foundation model (`facebook/vjepa2-vitl-fpc64-256`) contains linearly accessible structure related to simple 2D physics.  
+This repository is an exploratory, fast-turnaround study on whether a frozen video foundation model [V-JEPA 2](https://ai.meta.com/research/vjepa/) (`facebook/vjepa2-vitl-fpc64-256`) contains linearly accessible structure related to simple 2D physics.  
 The core idea is not to train a new physics model, but to probe an existing representation with very small heads and ask: are simulation parameters and dynamics translatable from the latent space?
 
 This is an interesting early signal, not proof of physical understanding. The dataset is small, the setting is synthetic, and the results should be treated as hypothesis-generating.
@@ -154,6 +154,85 @@ Outputs:
 
 Interpretation: the strong anti-pixel signal is robust for dynamics and weak for direct pixel->embedding reconstruction. Alpha-sim decoding is currently sensitive and not stable enough for strong claims.
 
+## Cross-Equation Stress Tests
+
+To push the postulation harder, two paired datasets were added where each pair starts from the same initial blob field but uses a different governing equation.
+
+### A) Pure advection vs pure diffusion
+
+Pipeline:
+
+- `advection_diffusion/equation_sim.py`
+- `advection_diffusion/embed_sim.py`
+- `advection_diffusion/try_to_fit.py`
+
+Artifacts:
+
+- `advection_diffusion/results/fit_summary.txt`
+- `advection_diffusion/results/fit_metrics.json`
+- `advection_diffusion/results/fit_results.png`
+
+Figure:
+
+![Advection vs Diffusion results](advection_diffusion/results/fit_results.png)
+
+Key outcomes (test split):
+
+- Equation classification (sim-mean and frame): `1.0000` accuracy
+- Parameter probe (advection): `vx R2=0.9713`, `vy R2=0.9532`
+- Koopman rollout cosine (shared model): overall `0.9154`, diffusion `0.8951`, advection `0.9357`
+
+Important caveat:
+
+- Diffusion `alpha` collapsed to a single matched value in this run (`alpha=0.01` for all diffusion sims), so diffusion-alpha `R2` is not interpretable here.
+
+Interpretation:
+
+- Latents separate transport vs diffusion regimes very strongly and preserve directional velocity information with high linear recoverability.
+
+### B) Damped wave vs diffusion
+
+Pipeline:
+
+- `wave_diffusion/equation_sim.py`
+- `wave_diffusion/embed_sim.py`
+- `wave_diffusion/try_to_fit.py`
+
+Artifacts:
+
+- `wave_diffusion/results/fit_summary.txt`
+- `wave_diffusion/results/fit_metrics.json`
+- `wave_diffusion/results/fit_results.png`
+
+Figure:
+
+![Wave vs Diffusion results](wave_diffusion/results/fit_results.png)
+
+Key outcomes (test split):
+
+- Equation classification (sim-mean and frame): `1.0000` accuracy
+- Parameter probe (wave): `c R2=0.7775`, `gamma R2=-1.4275`
+- Koopman rollout cosine:
+  - shared first-order: `0.9147`
+  - wave first-order: `0.9131`
+  - wave second-order: `0.9482`
+  - diffusion first-order: `0.9157`
+
+Important caveat:
+
+- Diffusion `alpha` again collapsed to a single matched value in this run (`alpha=0.22`), so diffusion-alpha `R2` is not interpretable in this dataset either.
+
+Interpretation:
+
+- Wave dynamics are captured better with a second-order latent transition than a first-order one, which is the expected structural signature for a wave-type system.
+- `gamma` is not yet robustly decodable in this setup.
+
+### Combined take from stress tests
+
+- Strong support for equation-type and dynamics-structure separability in frozen embeddings.
+- Strong evidence that latent dynamics are not behaving like a trivial single-regime smoothing model.
+- Parameter-level claims remain partial: velocity and wave speed decode well; damping and diffusion-alpha need improved data variation and controls.
+
 ## Conservative Conclusion
 
 What this supports:
@@ -175,6 +254,7 @@ What this does not prove:
 - Single model backbone.
 - Only 5 seeds so far; one seed shows unstable sim-level alpha behavior.
 - Synthetic rendering pipeline can introduce shortcuts.
+- In the new paired stress tests, matched-diffusion generation collapsed diffusion `alpha` to a single value, invalidating alpha-R2 interpretation there.
 
 ## Next Research Steps
 
@@ -183,7 +263,8 @@ What this does not prove:
 3. Compare against other frozen video encoders.
 4. Add different dynamics families (wave, advection, reaction-diffusion).
 5. Improve spatial operators and regularization.
-6. Test robustness under rendering perturbations and distribution shifts.
+6. Force broad diffusion-alpha variation in paired datasets while preserving visual matching.
+7. Test robustness under rendering perturbations and distribution shifts.
 
 ## Reproducibility
 
@@ -194,6 +275,12 @@ python "heat/equation_sim.py"
 python "heat/embed_sim.py"
 python "heat/try_to_fit.py"
 python "heat/pixel_vs_embed_falsification.py"
+python "advection_diffusion/equation_sim.py"
+python "advection_diffusion/embed_sim.py"
+python "advection_diffusion/try_to_fit.py"
+python "wave_diffusion/equation_sim.py"
+python "wave_diffusion/embed_sim.py"
+python "wave_diffusion/try_to_fit.py"
 ```
 
 Main artifacts:
@@ -203,3 +290,9 @@ Main artifacts:
 - `heat/results/pixel_falsification_summary.txt`
 - `heat/results/pixel_falsification_metrics.json`
 - `heat/results/spatial_heat_head.pt`
+- `advection_diffusion/results/fit_summary.txt`
+- `advection_diffusion/results/fit_metrics.json`
+- `advection_diffusion/results/fit_results.png`
+- `wave_diffusion/results/fit_summary.txt`
+- `wave_diffusion/results/fit_metrics.json`
+- `wave_diffusion/results/fit_results.png`

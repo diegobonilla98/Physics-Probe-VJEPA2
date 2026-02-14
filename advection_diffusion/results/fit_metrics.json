@@ -1,0 +1,127 @@
+{
+  "setup": {
+    "n_total": 120,
+    "n_train": 96,
+    "n_test": 24,
+    "seed": 42,
+    "test_ratio": 0.2,
+    "ridge_lambda": 0.01,
+    "koopman_latent_dim": 32
+  },
+  "equation_classification": {
+    "sim_mean_train": {
+      "accuracy": 1.0,
+      "precision": 0.9999999999999791,
+      "recall": 0.9999999999999791,
+      "tp": 48,
+      "tn": 48,
+      "fp": 0,
+      "fn": 0
+    },
+    "sim_mean_test": {
+      "accuracy": 1.0,
+      "precision": 0.9999999999999166,
+      "recall": 0.9999999999999166,
+      "tp": 12,
+      "tn": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "frame_train": {
+      "accuracy": 1.0,
+      "precision": 0.9999999999999994,
+      "recall": 0.9999999999999994,
+      "tp": 1536,
+      "tn": 1536,
+      "fp": 0,
+      "fn": 0
+    },
+    "frame_test": {
+      "accuracy": 1.0,
+      "precision": 0.9999999999999973,
+      "recall": 0.9999999999999973,
+      "tp": 384,
+      "tn": 384,
+      "fp": 0,
+      "fn": 0
+    }
+  },
+  "parameter_regression": {
+    "all_params_train_r2_total": 0.9999999976667023,
+    "all_params_test_r2_total": 0.9610895161970678,
+    "advection_vx_r2_test": 0.9713380268641891,
+    "advection_vy_r2_test": 0.9532313755580375,
+    "advection_vx_mae_test": 0.20079459249973297,
+    "advection_vy_mae_test": 0.26938557624816895,
+    "diffusion_alpha_r2_test": -170.9348004094969,
+    "diffusion_alpha_mae_test": 2.9498089588742005e-06
+  },
+  "koopman_shared": {
+    "latent_dim": 32,
+    "spectral_radius": 0.9936034083366394,
+    "train": {
+      "rollout_cos_mean": 0.9167302971084913,
+      "rollout_cos_std": 0.0213290948741198,
+      "rollout_mse_mean": 0.9227828041960796,
+      "rollout_cos_mean_diffusion": 0.8977552006642023,
+      "rollout_cos_std_diffusion": 0.010301428720772164,
+      "rollout_cos_mean_advection": 0.9357053935527802,
+      "rollout_cos_std_advection": 0.00914508460699669
+    },
+    "test": {
+      "rollout_cos_mean": 0.9154387960831324,
+      "rollout_cos_std": 0.021114624455069696,
+      "rollout_mse_mean": 0.9307870641350746,
+      "rollout_cos_mean_diffusion": 0.8951380749543508,
+      "rollout_cos_std_diffusion": 0.006470599148416467,
+      "rollout_cos_mean_advection": 0.9357395172119141,
+      "rollout_cos_std_advection": 0.005054455630495168
+    }
+  },
+  "koopman_by_equation": {
+    "diffusion": {
+      "latent_dim": 32,
+      "spectral_radius": 0.9893479347229004,
+      "train": {
+        "rollout_cos_mean": 0.9046460005144278,
+        "rollout_cos_std": 0.007217924937782924,
+        "rollout_mse_mean": 1.0925151991347473,
+        "rollout_cos_mean_diffusion": 0.9046460005144278,
+        "rollout_cos_std_diffusion": 0.007217924937782924,
+        "rollout_cos_mean_advection": null,
+        "rollout_cos_std_advection": null
+      },
+      "test": {
+        "rollout_cos_mean": 0.9006498803695043,
+        "rollout_cos_std": 0.00571337690581936,
+        "rollout_mse_mean": 1.1164412597815196,
+        "rollout_cos_mean_diffusion": 0.9006498803695043,
+        "rollout_cos_std_diffusion": 0.00571337690581936,
+        "rollout_cos_mean_advection": null,
+        "rollout_cos_std_advection": null
+      }
+    },
+    "advection": {
+      "latent_dim": 32,
+      "spectral_radius": 1.005654215812683,
+      "train": {
+        "rollout_cos_mean": 0.9318779706954956,
+        "rollout_cos_std": 0.008202922332079424,
+        "rollout_mse_mean": 0.7995319366455078,
+        "rollout_cos_mean_diffusion": null,
+        "rollout_cos_std_diffusion": null,
+        "rollout_cos_mean_advection": 0.9318779706954956,
+        "rollout_cos_std_advection": 0.008202922332079424
+      },
+      "test": {
+        "rollout_cos_mean": 0.9354483584562937,
+        "rollout_cos_std": 0.005378296308449698,
+        "rollout_mse_mean": 0.7509073515733083,
+        "rollout_cos_mean_diffusion": null,
+        "rollout_cos_std_diffusion": null,
+        "rollout_cos_mean_advection": 0.9354483584562937,
+        "rollout_cos_std_advection": 0.005378296308449698
+      }
+    }
+  }
+}

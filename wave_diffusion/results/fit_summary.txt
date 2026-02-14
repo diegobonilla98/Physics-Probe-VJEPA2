@@ -1,0 +1,22 @@
+wave vs diffusion probe summary
+========================================================================
+sims: total=120 train=96 test=24
+
+equation classification
+------------------------------------------------------------------------
+sim-mean acc train/test: 1.0000 / 1.0000
+frame acc train/test: 1.0000 / 1.0000
+
+parameter probes
+------------------------------------------------------------------------
+all-param total R2 train/test: 1.0000 / 0.9398
+wave c R2=0.7775 gamma R2=-1.4275
+wave c MAE=0.0708 gamma MAE=0.0234
+diffusion alpha R2=-403182.0823 MAE=0.0001
+
+koopman
+------------------------------------------------------------------------
+shared first-order test cos=0.9147 +/- 0.0069
+wave first-order test cos=0.9131 +/- 0.0107
+wave second-order test cos=0.9482 +/- 0.0079
+diffusion first-order test cos=0.9157 +/- 0.0039

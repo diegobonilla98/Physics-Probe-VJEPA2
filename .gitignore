@@ -1,4 +1,6 @@
 heat/simulations/
+advection_diffusion/simulations/
+wave_diffusion/simulations/
 
 __pycache__/
 *.py[cod]
@@ -18,3 +20,4 @@ env/
 *.ckpt
 
 .ipynb_checkpoints/
+.vscode/
