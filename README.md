@@ -29,6 +29,8 @@ Concrete questions:
 
 ### Data generation
 
+![Heat diffusion sample](simulation_samples/heat_sample.gif)
+
 - PDE system: 2D heat/diffusion (`heat/equation_sim.py`)
 - Simulations: 50 total
 - Split: 40 train / 10 test
@@ -160,6 +162,8 @@ To push the postulation harder, two paired datasets were added where each pair s
 
 ### A) Pure advection vs pure diffusion
 
+![Advection vs Diffusion sample](simulation_samples/advection_diffusion_sample.gif)
+
 Pipeline:
 
 - `advection_diffusion/equation_sim.py`
@@ -191,6 +195,8 @@ Interpretation:
 - Latents separate transport vs diffusion regimes very strongly and preserve directional velocity information with high linear recoverability.
 
 ### B) Damped wave vs diffusion
+
+![Wave vs Diffusion sample](simulation_samples/wave_diffusion_sample.gif)
 
 Pipeline:
 

@@ -1,4 +1,5 @@
 heat/simulations/
+save_simulations.py
 advection_diffusion/simulations/
 wave_diffusion/simulations/
 
